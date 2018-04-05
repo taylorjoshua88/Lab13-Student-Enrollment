@@ -16,11 +16,11 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">Student and Course Administration</a>
         <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a></li>
-            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Students</a></li>
-            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Courses</a></li>
-            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">About</a></li>
-            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Contact</a></li>
+            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")" asp-controller="Home" asp-action="Index">Students</a></li>
+            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")" asp-controller="Home" asp-action="Index">Courses</a></li>
+            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "About" ? "active" : "")" asp-controller="Home" asp-action="About">About</a></li>
+            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Contact" ? "active" : "")" asp-controller="Home" asp-action="Contact">Contact</a></li>
         </ul>
     </nav>
     <div>
