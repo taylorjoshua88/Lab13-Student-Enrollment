@@ -6,8 +6,7 @@
     ViewData["Description"] = "All your institution's courses at a glance with add, remove, and delete options.";
 }
 
-<div class="container">
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().Name)</th>
@@ -15,19 +14,26 @@
                 <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().StartDate)</th>
                 <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().EndDate)</th>
                 <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().Technology)</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(_ => item.Name)</td>
-                    <td>@Html.DisplayFor(_ => item.CourseLevel)</td>
-                    <td>@Html.DisplayFor(_ => item.StartDate)</td>
-                    <td>@Html.DisplayFor(_ => item.EndDate)</td>
-                    <td>@Html.DisplayFor(_ => item.Technology)</td>
+                <tr class="">
+                    <td class="align-middle">@Html.DisplayFor(_ => item.Name)</td>
+                    <td class="align-middle">@Html.DisplayFor(_ => item.CourseLevel)</td>
+                    <td class="align-middle">@Html.DisplayFor(_ => item.StartDate)</td>
+                    <td class="align-middle">@Html.DisplayFor(_ => item.EndDate)</td>
+                    <td class="align-middle">@Html.DisplayFor(_ => item.Technology)</td>
+                    <td class="align-middle">
+                        <div class="btn-group btn-group-sm float-sm-right" role="group">
+                            <a class="btn btn-info" asp-controller="Courses" asp-action="Details">Details</a>
+                            <a class="btn btn-warning" asp-controller="Courses" asp-action="Edit">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Courses" asp-action="Delete">Delete</a>
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-</div>

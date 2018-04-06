@@ -20,7 +20,7 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar sticky-top navbar-dark bg-dark">
         <div class="container-fluid">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">Student and Course Administration</a>
         <ul class="nav nav-pills">
@@ -36,7 +36,7 @@
         <h1>@ViewData["Tagline"]</h1>
         <strong>@ViewData["Description"]</strong>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         @RenderBody()
     </div>
 </body>

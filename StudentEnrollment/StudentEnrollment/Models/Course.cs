@@ -17,7 +17,7 @@ namespace StudentEnrollment.Models
         [StringLength(30, MinimumLength = 5)]
         public string Iteration { get; set; }
 
-        [Display(Name = "Course Level")]
+        [Display(Name = "Level")]
         [Required]
         public int CourseLevel { get; set; }
 
