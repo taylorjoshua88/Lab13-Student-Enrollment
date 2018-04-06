@@ -6,7 +6,28 @@
     ViewData["Description"] = "All your institution's courses at a glance with add, remove, and delete options.";
 }
 
-@foreach (Course course in Model)
-{
-    <p>@course.Name</p>
-}
+<div class="container">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().Name)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().CourseLevel)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().StartDate)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().EndDate)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().Technology)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(_ => item.Name)</td>
+                    <td>@Html.DisplayFor(_ => item.CourseLevel)</td>
+                    <td>@Html.DisplayFor(_ => item.StartDate)</td>
+                    <td>@Html.DisplayFor(_ => item.EndDate)</td>
+                    <td>@Html.DisplayFor(_ => item.Technology)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
