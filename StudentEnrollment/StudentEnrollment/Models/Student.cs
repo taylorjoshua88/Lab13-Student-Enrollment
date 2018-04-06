@@ -20,16 +20,16 @@ namespace StudentEnrollment.Models
         [Required]
         public string LastName { get; set; }
 
-        [Display(Name = "Enrollment Date")]
+        [Display(Name = "Registration Date")]
         [DataType(DataType.Date)]
         [Required]
         public DateTime EnrollmentDate;
 
         [Display(Name = "Current Course")]
+        [Required]
         public Course CurrentCourse { get; set; }
 
         [Display(Name = "Highest Course Level Completed")]
-        [Required]
         public int HighestCourseLevel { get; set; } = 0;
 
         [Display(Name = "Completed Qualifying Interview")]
