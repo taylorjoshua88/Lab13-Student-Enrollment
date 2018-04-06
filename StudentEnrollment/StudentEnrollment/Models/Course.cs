@@ -37,11 +37,11 @@ namespace StudentEnrollment.Models
     public enum Technology
     {
         [Display(Name = "ASP.NET Core")] AspDotNetCore,
-        [Display(Name = "Web Frontend")] WebFrontend,
+        [Display(Name = "Web Frontend")] JavaScript,
         [Display(Name = "Mobile Applications")] MobileApp,
         [Display(Name = "Ruby on Rails")] Rails,
+        [Display(Name = "General Software Development")] General,
         Python,
-        NodeJS,
         Java
     }
 }
