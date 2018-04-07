@@ -17,9 +17,8 @@ namespace StudentEnrollment.Models
         [StringLength(30, MinimumLength = 5)]
         public string Iteration { get; set; }
 
-        [Display(Name = "Level")]
         [Required]
-        public int CourseLevel { get; set; }
+        public int Level { get; set; }
 
         [Display(Name = "Starting Date")]
         [DataType(DataType.Date)]
@@ -37,10 +36,10 @@ namespace StudentEnrollment.Models
     public enum Technology
     {
         [Display(Name = "ASP.NET Core")] AspDotNetCore,
-        [Display(Name = "Web Frontend")] JavaScript,
+        [Display(Name = "JavaScript")] JavaScript,
         [Display(Name = "Mobile Applications")] MobileApp,
         [Display(Name = "Ruby on Rails")] Rails,
-        [Display(Name = "General Software Development")] General,
+        [Display(Name = "General Development")] General,
         Python,
         Java
     }

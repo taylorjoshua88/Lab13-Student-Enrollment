@@ -26,12 +26,12 @@ namespace StudentEnrollment.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CourseLevel");
-
                     b.Property<DateTime>("EndDate");
 
                     b.Property<string>("Iteration")
                         .HasMaxLength(30);
+
+                    b.Property<int>("Level");
 
                     b.Property<string>("Name")
                         .IsRequired()

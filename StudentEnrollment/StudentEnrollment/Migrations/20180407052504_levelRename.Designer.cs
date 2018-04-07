@@ -12,8 +12,8 @@ using System;
 namespace StudentEnrollment.Migrations
 {
     [DbContext(typeof(StudentEnrollmentDbContext))]
-    [Migration("20180406014442_Initial")]
-    partial class Initial
+    [Migration("20180407052504_levelRename")]
+    partial class levelRename
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,12 +27,12 @@ namespace StudentEnrollment.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Level");
-
                     b.Property<DateTime>("EndDate");
 
                     b.Property<string>("Iteration")
                         .HasMaxLength(30);
+
+                    b.Property<int>("Level");
 
                     b.Property<string>("Name")
                         .IsRequired()

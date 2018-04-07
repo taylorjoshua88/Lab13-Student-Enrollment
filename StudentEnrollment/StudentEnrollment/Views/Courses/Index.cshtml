@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Course>
+﻿@model CoursesViewModel
 
 @{
     ViewData["Title"] = "Courses Overview";
@@ -6,34 +6,61 @@
     ViewData["Description"] = "All your institution's courses at a glance with add, remove, and delete options.";
 }
 
-    <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().Name)</th>
-                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().CourseLevel)</th>
-                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().StartDate)</th>
-                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().EndDate)</th>
-                <th scope="col">@Html.DisplayNameFor(m => m.FirstOrDefault().Technology)</th>
-                <th scope="col"></th>
+
+<div class="btn-group btn-group" role="group">
+    <a class="btn btn-success" asp-controller="Courses" asp-action="Create">Create New Course</a>
+</div>
+
+<div class="mb-2 float-right">
+    <form class="form-inline" asp-controller="Courses" asp-action="Index" method="get">
+        <input class="form-control mr-1" asp-for="NameFilter" placeholder="Filter by Course Name" />
+
+        <!-- I cannot find a way to make the date input field respect my placeholder -->
+        <!--
+        <input class="form-control mr-1" asp-for="StartDate" style="width: 8em !important" />
+        <input class="form-control mr-1" asp-for="EndDate" style="width: 8em !important" />
+        -->
+
+        <select class="form-control mr-1" asp-for="Level" asp-items="Model.Levels">
+            <option value="">All Levels</option>
+        </select>
+
+        <select class="form-control mr-2" asp-for="Technology" asp-items="Html.GetEnumSelectList<Technology>()">
+            <option value="">All Technologies</option>
+        </select>
+
+        <button class="btn btn-primary" type="submit">Apply Filters</button>
+    </form>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark sticky-top">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(m => m.Courses.FirstOrDefault().Name)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Courses.FirstOrDefault().Level)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Courses.FirstOrDefault().StartDate)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Courses.FirstOrDefault().EndDate)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Courses.FirstOrDefault().Technology)</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Courses)
+        {
+            <tr class="align-middle">
+                <td class="align-middle">@Html.DisplayFor(_ => item.Name)</td>
+                <td class="align-middle">@Html.DisplayFor(_ => item.Level)</td>
+                <td class="align-middle">@Html.DisplayFor(_ => item.StartDate)</td>
+                <td class="align-middle">@Html.DisplayFor(_ => item.EndDate)</td>
+                <td class="align-middle">@Html.DisplayFor(_ => item.Technology)</td>
+                <td class="align-middle">
+                    <div class="btn-group btn-group-sm float-right" role="group">
+                        <a class="btn btn-info" asp-controller="Courses" asp-action="Details">Details</a>
+                        <a class="btn btn-warning" asp-controller="Courses" asp-action="Edit">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Courses" asp-action="Delete">Delete</a>
+                    </div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="">
-                    <td class="align-middle">@Html.DisplayFor(_ => item.Name)</td>
-                    <td class="align-middle">@Html.DisplayFor(_ => item.CourseLevel)</td>
-                    <td class="align-middle">@Html.DisplayFor(_ => item.StartDate)</td>
-                    <td class="align-middle">@Html.DisplayFor(_ => item.EndDate)</td>
-                    <td class="align-middle">@Html.DisplayFor(_ => item.Technology)</td>
-                    <td class="align-middle">
-                        <div class="btn-group btn-group-sm float-sm-right" role="group">
-                            <a class="btn btn-info" asp-controller="Courses" asp-action="Details">Details</a>
-                            <a class="btn btn-warning" asp-controller="Courses" asp-action="Edit">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Courses" asp-action="Delete">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
