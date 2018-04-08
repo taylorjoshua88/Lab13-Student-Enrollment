@@ -51,9 +51,9 @@
         <span class="text-danger" asp-validation-for="EndDate"></span>
     </div>
     <div class="form-group row">
-        <label class=col-sm-2 col-form-label asp-for="Technology"></label>
+        <label class="col-sm-2 col-form-label" asp-for="Technology"></label>
         <div class="col-sm-6">
-            <input class="form-control" asp-for="Technology" />
+            <select class="form-control" asp-for="Technology" asp-items="Html.GetEnumSelectList<Technology>()"></select>
         </div>
         <span class="text-danger" asp-validation-for="Technology"></span>
     </div>
