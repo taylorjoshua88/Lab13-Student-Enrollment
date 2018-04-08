@@ -22,14 +22,14 @@
 <body>
     <nav class="navbar sticky-top navbar-dark bg-dark">
         <div class="container-fluid">
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Student and Course Administration</a>
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a></li>
-            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")" asp-controller="Students" asp-action="Index">Students</a></li>
-            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")" asp-controller="Courses" asp-action="Index">Courses</a></li>
-            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "About" ? "active" : "")" asp-controller="Home" asp-action="About">About</a></li>
-            <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Contact" ? "active" : "")" asp-controller="Home" asp-action="Contact">Contact</a></li>
-        </ul>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Student and Course Administration</a>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")" asp-controller="Students" asp-action="Index">Students</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")" asp-controller="Courses" asp-action="Index">Courses</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "About" ? "active" : "")" asp-controller="Home" asp-action="About">About</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Contact" ? "active" : "")" asp-controller="Home" asp-action="Contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
     <div class="jumbotron text-center mb-2">
@@ -38,6 +38,7 @@
     </div>
     <div class="container-fluid">
         @RenderBody()
+        <p class="h6 mt-3 text-center">Copyright (C) 2018 <a href="mailto:taylor.joshua88@gmail.com">Joshua William Taylor</a></p>
     </div>
 </body>
 </html>
