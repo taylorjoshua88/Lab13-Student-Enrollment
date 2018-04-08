@@ -77,5 +77,11 @@ namespace StudentEnrollment.Controllers
 
             return View(courseDetailVM);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
