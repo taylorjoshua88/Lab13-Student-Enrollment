@@ -31,6 +31,10 @@ namespace StudentEnrollment.Models
         [EnumDataType(typeof(Technology))]
         [Required]
         public Technology Technology { get; set; }
+
+        [StringLength(60, MinimumLength = 3)]
+        [Required]
+        public string Instructor { get; set; }
     }
 
     public enum Technology

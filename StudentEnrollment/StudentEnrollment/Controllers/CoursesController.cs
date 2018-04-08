@@ -55,5 +55,27 @@ namespace StudentEnrollment.Controllers
 
             return View(coursesVM);
         }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            CourseDetailViewModel courseDetailVM = new CourseDetailViewModel();
+
+            if (id.HasValue)
+            {
+                courseDetailVM.Course = 
+                    await _context.Course.Where(c => c.ID == id).SingleAsync();
+
+                courseDetailVM.Students = 
+                    await _context.Student.Where(s => s.CurrentCourse == courseDetailVM.Course)
+                                          .Select(s => s)
+                                          .ToListAsync();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(courseDetailVM);
+        }
     }
 }

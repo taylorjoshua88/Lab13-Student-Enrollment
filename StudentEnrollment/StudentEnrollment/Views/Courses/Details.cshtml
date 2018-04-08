@@ -1,0 +1,52 @@
+﻿@model CourseDetailViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Course.Name} - Course Details";
+    ViewData["Tagline"] = Model.Course.Name;
+    ViewData["Description"] = $"Details about the {Model.Course.Name} course.";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header bg-light">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Courses" asp-action="Index">Return to Overview</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Courses" asp-action="Edit">Edit This Course</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Courses" asp-action="Delete">Delete This Course</a></li>
+                    </ul>
+            </div>
+            <div class="card-body">
+                <dl class="dl-">
+                    <dt>@Html.DisplayNameFor(c => c.Course.Name)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Name)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Iteration)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Iteration)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Level)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Level)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.StartDate)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.StartDate)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.EndDate)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.EndDate)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Technology)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Technology)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="card-title">Students currently enrolled in this course:</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    @foreach (var student in Model.Students)
+                    {
+                        <a class="list-group-item list-group-item-action" asp-controller="Students" asp-action="Details">@student.LastName, @student.FirstName</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

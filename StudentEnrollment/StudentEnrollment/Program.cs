@@ -26,6 +26,7 @@ namespace StudentEnrollment
                 try
                 {
                     SeedCourseData.Initialize(serviceProvider);
+                    SeedStudentData.Initialize(serviceProvider);
                 }
                 catch (Exception e)
                 {
