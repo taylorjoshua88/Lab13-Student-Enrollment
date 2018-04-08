@@ -6,18 +6,62 @@
     ViewData["Description"] = "Create a new course of instruction for your institution.";
 }
 
-<div class="row">
-    <div class="col-md-5">
-        <form asp-controller="Courses" asp-action="Create" method="post">
-            <div asp-validation-summary="ModelOnly"></div>
-            <div class="form-group">
-                <label asp-for="Name"></label>
-                <input class="form-control" asp-for="Name" />
-                <span class="text-danger" asp-validation-for="Name"></span>
-            </div>
-        </form>
+<form class="offset-2" asp-controller="Courses" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="Name"></label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Name" />
+        </div>
+        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
-</div>
+    <div class="form-group row">
+        <label class=col-sm-2 col-form-label asp-for="Instructor"></label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Instructor" />
+        </div>
+        <span class="text-danger" asp-validation-for="Instructor"></span>
+    </div>
+    <div class="form-group row">
+        <label class=col-sm-2 col-form-label asp-for="Iteration"></label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Iteration" />
+        </div>
+        <span class="text-danger" asp-validation-for="Iteration"></span>
+    </div>
+    <div class="form-group row">
+        <label class=col-sm-2 col-form-label asp-for="Level"></label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Level" />
+        </div>
+        <span class="text-danger" asp-validation-for="Level"></span>
+    </div>
+    <div class="form-group row">
+        <label class=col-sm-2 col-form-label asp-for="StartDate"></label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="StartDate" />
+        </div>
+        <span class="text-danger" asp-validation-for="StartDate"></span>
+    </div>
+    <div class="form-group row">
+        <label class=col-sm-2 col-form-label asp-for="EndDate"></label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="EndDate" />
+        </div>
+        <span class="text-danger" asp-validation-for="EndDate"></span>
+    </div>
+    <div class="form-group row">
+        <label class=col-sm-2 col-form-label asp-for="Technology"></label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Technology" />
+        </div>
+        <span class="text-danger" asp-validation-for="Technology"></span>
+    </div>
+    <div class="form-group row offset-2">
+        <button class="btn btn-success mr-1" type="submit">Create Course</button>
+        <a asp-controller="Courses" asp-action="Index" class="btn btn-danger">Cancel</a>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
