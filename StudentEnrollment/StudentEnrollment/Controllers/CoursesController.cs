@@ -91,6 +91,7 @@ namespace StudentEnrollment.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [Bind("ID,Name,Instructor,Technology,Iteration,Level,StartDate,EndDate")]
             Course course)
@@ -145,6 +146,7 @@ namespace StudentEnrollment.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             [Bind("ID,Name,Instructor,Technology,Iteration,Level,StartDate,EndDate")]
             Course course)
@@ -215,6 +217,7 @@ namespace StudentEnrollment.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Delete")]
         public async Task<IActionResult> CommitDelete(int id)
         {
