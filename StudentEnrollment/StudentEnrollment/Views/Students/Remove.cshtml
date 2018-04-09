@@ -27,6 +27,14 @@
                     <dd>@Html.DisplayFor(c => c.FirstName)</dd>
                     <dt>@Html.DisplayNameFor(c => c.EnrollmentDate)</dt>
                     <dd>@Html.DisplayFor(c => c.EnrollmentDate)</dd>
+                    <dt>Course in Progress</dt>
+                    <dd class="align-middle">
+                        @if (Model.CurrentCourse != null)
+                        {
+                            @(Model.CurrentCourse?.StartDate <= DateTime.Today &&
+                              Model.CurrentCourse?.EndDate >= DateTime.Today ? "Yes" : "No")
+                        }
+                    </dd>
                     <dt>@Html.DisplayNameFor(c => c.CurrentCourse)</dt>
                     <dd>
                         @if (Model.CurrentCourse != null)
