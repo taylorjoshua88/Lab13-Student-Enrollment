@@ -15,8 +15,8 @@
             <div class="card-body pt-3 pb-0">
                     <ul class="nav nav-fill pb-2">
                         <li class="nav-item"><a class="btn btn-info mr-1" asp-controller="Courses" asp-action="Index">Return to Overview</a></li>
-                        <li class="nav-item"><a class="btn btn-warning mr-1" asp-controller="Courses" asp-action="Edit">Edit Course</a></li>
-                        <li class="nav-item"><a class="btn btn-danger mr-1" asp-controller="Courses" asp-action="Delete">Delete Course</a></li>
+                        <li class="nav-item"><a class="btn btn-warning mr-1" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Course.ID">Edit Course</a></li>
+                        <li class="nav-item"><a class="btn btn-danger mr-1" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.Course.ID">Delete Course</a></li>
                     </ul>
                 <dl>
                     <dt>@Html.DisplayNameFor(c => c.Course.Name)</dt>

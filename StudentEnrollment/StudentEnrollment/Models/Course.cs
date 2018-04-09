@@ -15,6 +15,7 @@ namespace StudentEnrollment.Models
         public string Name { get; set; }
 
         [StringLength(30, MinimumLength = 5)]
+        [Required]
         public string Iteration { get; set; }
 
         [Required]

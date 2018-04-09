@@ -40,7 +40,7 @@
         <!-- If TempData["NotificationMessage"] is set then display an alert -->
         @if (TempData.ContainsKey("NotificationMessage"))
         {
-            <div class="alert @(TempData["NotificationType"] ?? "alert-info")">
+            <div class="alert alert-dismissible @(TempData.ContainsKey("NotificationType") ? TempData["NotificationType"] : "alert-info")">
                 @TempData["NotificationMessage"]
             </div>
         }

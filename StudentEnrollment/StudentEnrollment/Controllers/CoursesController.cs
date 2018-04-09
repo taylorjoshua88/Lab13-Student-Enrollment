@@ -116,8 +116,58 @@ namespace StudentEnrollment.Controllers
                 // Redirect to the Details view for the newly added course
                 TempData["NotificationType"] = "alert-success";
                 TempData["NotificationMessage"] = "Successfully added new course!";
-
                 return RedirectToAction("Details", new { newCourse.Entity.ID });
+            }
+
+            return View(course);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id.HasValue)
+            {
+                try
+                {
+                    return View(await _context.Course.Where(c => c.ID == id).SingleAsync());
+                }
+                catch (Exception)
+                {
+                    // Could not match id, display an error message and redirect to Index
+                    TempData["NotificationType"] = "alert-danger";
+                    TempData["NotificationMessage"] = "Could not find the specified course to edit!";
+                    return RedirectToAction("Index");
+                }
+            }
+
+            // Attempting to edit without an id will simply redirect to Index
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(
+            [Bind("ID,Name,Instructor,Technology,Iteration,Level,StartDate,EndDate")]
+            Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                EntityEntry<Course> editCourse = _context.Update(course);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    TempData["NotificationType"] = "alert-danger";
+                    TempData["NotificationMessage"] = "Could not edit the course! Please try again.";
+                    return View(course);
+                }
+
+                // Success! Notify the user and redirect to Details so the user can verify the changes
+                TempData["NotificationType"] = "alert-success";
+                TempData["NotificationMessage"] = $"Sucessfully modified {editCourse.Entity.Name}!";
+                return RedirectToAction("Details", new { editCourse.Entity.ID });
             }
 
             return View(course);
