@@ -6,59 +6,58 @@
     ViewData["Description"] = "Create a new course of instruction for your institution.";
 }
 
-<form class="offset-3" asp-controller="Courses" asp-action="Create" method="post">
+<form class="offset-xl-3 offset-lg-3 offset-md-1 offset-sm-0" asp-controller="Courses" asp-action="Create" method="post">
     <div asp-validation-summary="ModelOnly"></div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" asp-for="Name"></label>
-        <div class="col-sm-6">
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm">
+            <label asp-for="Name"></label>
             <input class="form-control" asp-for="Name" />
+            <span class="text-danger" asp-validation-for="Name"></span>
         </div>
-        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
-    <div class="form-group row">
-        <label class=col-sm-2 col-form-label asp-for="Instructor"></label>
-        <div class="col-sm-6">
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm mr-1">
+            <label asp-for="Instructor"></label>
             <input class="form-control" asp-for="Instructor" />
+            <span class="text-danger" asp-validation-for="Instructor"></span>
         </div>
-        <span class="text-danger" asp-validation-for="Instructor"></span>
-    </div>
-    <div class="form-group row">
-        <label class=col-sm-2 col-form-label asp-for="Iteration"></label>
-        <div class="col-sm-6">
-            <input class="form-control" asp-for="Iteration" />
-        </div>
-        <span class="text-danger" asp-validation-for="Iteration"></span>
-    </div>
-    <div class="form-group row">
-        <label class=col-sm-2 col-form-label asp-for="Level"></label>
-        <div class="col-sm-6">
-            <input class="form-control" asp-for="Level" />
-        </div>
-        <span class="text-danger" asp-validation-for="Level"></span>
-    </div>
-    <div class="form-group row">
-        <label class=col-sm-2 col-form-label asp-for="StartDate"></label>
-        <div class="col-sm-6">
-            <input class="form-control" asp-for="StartDate" />
-        </div>
-        <span class="text-danger" asp-validation-for="StartDate"></span>
-    </div>
-    <div class="form-group row">
-        <label class=col-sm-2 col-form-label asp-for="EndDate"></label>
-        <div class="col-sm-6">
-            <input class="form-control" asp-for="EndDate" />
-        </div>
-        <span class="text-danger" asp-validation-for="EndDate"></span>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" asp-for="Technology"></label>
-        <div class="col-sm-6">
+
+        <div class="form-group col-sm">
+            <label asp-for="Technology"></label>
             <select class="form-control" asp-for="Technology" asp-items="Html.GetEnumSelectList<Technology>()"></select>
+            <span class="text-danger" asp-validation-for="Technology"></span>
         </div>
-        <span class="text-danger" asp-validation-for="Technology"></span>
     </div>
-    <div class="form-group row offset-2">
-        <button class="btn btn-success mr-1" type="submit">Create Course</button>
+
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm mr-1">
+            <label asp-for="Iteration"></label>
+            <input class="form-control" asp-for="Iteration" />
+            <span class="text-danger" asp-validation-for="Iteration"></span>
+        </div>
+
+        <div class="form-group col-sm">
+            <label asp-for="Level"></label>
+            <input class="form-control" asp-for="Level" />
+            <span class="text-danger" asp-validation-for="Level"></span>
+        </div>
+    </div>
+
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm">
+            <label asp-for="StartDate"></label>
+            <input class="form-control" asp-for="StartDate" />
+            <span class="text-danger" asp-validation-for="StartDate"></span>
+        </div>
+
+        <div class="form-group col-sm">
+            <label asp-for="EndDate"></label>
+            <input class="form-control" asp-for="EndDate" />
+            <span class="text-danger" asp-validation-for="EndDate"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success ml-3" type="submit">Create Course</button>
         <a asp-controller="Courses" asp-action="Index" class="btn btn-danger">Cancel</a>
     </div>
 </form>

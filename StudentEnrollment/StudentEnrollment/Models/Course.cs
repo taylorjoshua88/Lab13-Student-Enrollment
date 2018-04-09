@@ -10,7 +10,7 @@ namespace StudentEnrollment.Models
     {
         public int ID { get; set; }
 
-        [StringLength(60, MinimumLength = 3)]
+        [StringLength(100, MinimumLength = 3)]
         [Required]
         public string Name { get; set; }
 
