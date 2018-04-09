@@ -73,25 +73,15 @@ namespace StudentEnrollment.Controllers
         {
             CourseDetailViewModel courseDetailVM = new CourseDetailViewModel();
 
-            // If an ID was provided, match the correct Course and select all
-            // of the students enrolled in that course
+            // If an ID was provided then display the Details view, otherwise return to Index
             if (id.HasValue)
             {
-                courseDetailVM.Course = 
-                    await _context.Course.Where(c => c.ID == id).SingleAsync();
-
-                courseDetailVM.Students = 
-                    await _context.Student.Where(s => s.CurrentCourse == courseDetailVM.Course)
-                                          .Select(s => s)
-                                          .ToListAsync();
+                return View(await CourseDetailViewModel.FromIDAsync(id.Value, _context));
             }
             else
             {
-                // If this action was selected without an ID, just redirect to Index
                 return RedirectToAction("Index");
             }
-
-            return View(courseDetailVM);
         }
 
         [HttpGet]
@@ -109,7 +99,9 @@ namespace StudentEnrollment.Controllers
             {
                 EntityEntry<Course> newCourse = _context.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", newCourse.Entity.ID);
+
+                // Redirect to the Details view for the newly added course
+                return RedirectToAction("Details", new { newCourse.Entity.ID });
             }
 
             return View(course);
