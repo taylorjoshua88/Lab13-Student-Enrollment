@@ -44,5 +44,35 @@ namespace StudentEnrollment.Controllers
             // If no id was provided just redirect to Index
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Remove(int? id)
+        {
+            if (id.HasValue)
+            {
+                Student student;
+
+                try
+                {
+                    student = await _context.Student.Where(s => s.ID == id)
+                                                    .Include(s => s.CurrentCourse)
+                                                    .SingleAsync();
+                }
+                catch (Exception)
+                {
+                    // The student was not found, notify the user
+                    // TODO: Inject logger to provide proper logging of this
+                    TempData["NotificationType"] = "alert-danger";
+                    TempData["NotificationMessage"] = "Could not find the specified student to remove!";
+                    return RedirectToAction("Index");
+                }
+
+                // Present a confirmation page to the user
+                return View(student);
+            }
+
+            // If no id is provided then just redirect to Index
+            return RedirectToAction("Index");
+        }
     }
 }
