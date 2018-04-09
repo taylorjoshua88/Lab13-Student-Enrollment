@@ -172,5 +172,46 @@ namespace StudentEnrollment.Controllers
 
             return View(course);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id.HasValue)
+            {
+                Course course;
+                int studentCount;
+
+                try
+                {
+                    course = await _context.Course.Where(c => c.ID == id)
+                                                  .SingleAsync();
+
+                    // Get the number of students enrolled in this course
+                    studentCount = await _context.Student.Where(s => s.CurrentCourse.ID == id)
+                                                         .CountAsync();
+                }
+                catch (Exception)
+                {
+                    TempData["NotificationType"] = "alert-danger";
+                    TempData["NotificationMessage"] = "Could not find the specified course to delete.";
+                    return RedirectToAction("Index");
+                }
+
+                // Do not allow the removal of courses which still have students enrolled in them
+                if (studentCount > 0)
+                {
+                    TempData["NotificationType"] = "alert-warning";
+                    TempData["NotificationMessage"] = 
+                        $"{course.Name} cannot be removed while students are still enrolled in the course.";
+                    return RedirectToAction("Details", new { course.ID });
+                }
+
+                // Present a confirmation page to the user
+                return View(course);
+            }
+
+            // If no id is provided then just redirect to Index
+            return RedirectToAction("Index");
+        }
     }
 }
