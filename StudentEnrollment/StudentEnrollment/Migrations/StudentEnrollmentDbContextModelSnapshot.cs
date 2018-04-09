@@ -29,7 +29,8 @@ namespace StudentEnrollment.Migrations
                     b.Property<DateTime>("EndDate");
 
                     b.Property<string>("Instructor")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(60);
 
                     b.Property<string>("Iteration")
                         .HasMaxLength(30);
@@ -38,7 +39,7 @@ namespace StudentEnrollment.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(60);
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("StartDate");
 

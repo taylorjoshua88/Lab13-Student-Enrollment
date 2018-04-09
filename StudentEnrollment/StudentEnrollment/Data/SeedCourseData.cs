@@ -96,6 +96,28 @@ namespace StudentEnrollment.Data
                         EndDate = DateTime.Parse("2018-5-25"),
                         Iteration = "seattle-201d35",
                         Technology = Technology.General
+                    },
+
+                    new Course
+                    {
+                        Name = "Intro to JavaScript",
+                        Instructor = "Rodman",
+                        Level = 102,
+                        StartDate = DateTime.Parse("2018-4-16"),
+                        EndDate = DateTime.Parse("2018-4-20"),
+                        Iteration = "seattle-102n22",
+                        Technology = Technology.JavaScript
+                    },
+
+                    new Course
+                    {
+                        Name = "Advanced Software Development in Java With SpringMVC & Android",
+                        Instructor = "Van Truck",
+                        Level = 401,
+                        StartDate = DateTime.Parse("2018-7-9"),
+                        EndDate = DateTime.Parse("2018-9-14"),
+                        Iteration = "seattle-java-401d1",
+                        Technology = Technology.Java
                     }
                 );
 

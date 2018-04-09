@@ -1,4 +1,4 @@
-﻿@model CoursesViewModel
+﻿@model CourseIndexViewModel
 
 @{
     ViewData["Title"] = "Courses Overview";
@@ -13,14 +13,12 @@
 <form class="form-inline float-right" asp-controller="Courses" asp-action="Index" method="get">
     <input class="form-control mr-1" asp-for="NameFilter" placeholder="Filter by Course Name" />
 
-    <!-- I cannot find a way to make the date input field respect my placeholder -->
-    <!--
-    <input class="form-control mr-1" asp-for="StartDate" style="width: 8em !important" />
-    <input class="form-control mr-1" asp-for="EndDate" style="width: 8em !important" />
-    -->
-
     <select class="form-control mr-1" asp-for="Level" asp-items="Model.Levels">
         <option value="">All Levels</option>
+    </select>
+
+    <select class="form-control mr-2" asp-for="Instructor" asp-items="Model.Instructors">
+        <option value="">All Instructors</option>
     </select>
 
     <select class="form-control mr-2" asp-for="Technology" asp-items="Html.GetEnumSelectList<Technology>()">

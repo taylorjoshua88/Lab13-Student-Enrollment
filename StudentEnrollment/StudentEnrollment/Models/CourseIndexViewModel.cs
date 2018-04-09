@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace StudentEnrollment.Models
 {
-    public class CoursesViewModel
+    public class CourseIndexViewModel
     {
         public Technology? Technology { get; set; }
+
+        public SelectList Instructors { get; set; }
+        public string Instructor;
 
         public SelectList Levels { get; set; }
         public int? Level { get; set; }
