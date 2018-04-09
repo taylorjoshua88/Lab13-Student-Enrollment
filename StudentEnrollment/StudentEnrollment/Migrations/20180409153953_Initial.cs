@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StudentEnrollment.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace StudentEnrollment.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EndDate = table.Column<DateTime>(nullable: false),
                     Instructor = table.Column<string>(maxLength: 60, nullable: false),
-                    Iteration = table.Column<string>(maxLength: 30, nullable: true),
+                    Iteration = table.Column<string>(maxLength: 30, nullable: false),
                     Level = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
@@ -35,6 +35,7 @@ namespace StudentEnrollment.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CurrentCourseID = table.Column<int>(nullable: false),
+                    EnrollmentDate = table.Column<DateTime>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     HighestCourseLevel = table.Column<int>(nullable: false),
                     LastName = table.Column<string>(nullable: false),

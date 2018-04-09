@@ -1,0 +1,56 @@
+﻿@model StudentIndexViewModel
+
+@{
+    ViewData["Title"] = "Students Overview";
+    ViewData["Tagline"] = "Students Overview";
+    ViewData["Description"] = "All your institution's enrolled students at a glance.";
+}
+
+<div class="btn-group" role="group">
+    <a class="btn btn-success" asp-controller="Students" asp-action="Add">Add New Student</a>
+</div>
+
+<form class="form-inline float-right mb-2" asp-controller="Students" asp-action="Index" method="get">
+    <input class="form-control mr-1" asp-for="NameFilter" placeholder="Filter by Student Name" />
+    <input class="form-control mr-1" asp-for="CourseFilter" placeholder="Filter by Course Name" />
+    <button class="btn btn-primary" type="submit">Apply Filters</button>
+</form>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark sticky-top">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().LastName)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().FirstName)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().EnrollmentDate)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().CurrentCourse)</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@Html.DisplayFor(_ => student.LastName)</a></td>
+                <td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@Html.DisplayFor(_ => student.FirstName)</a></td>
+                <td>@Html.DisplayFor(_ => student.EnrollmentDate)</td>
+                <td>
+                @if (student.CurrentCourse != null)
+                {
+                    <a asp-controller="Courses" asp-action="Details" asp-route-id="@student.CurrentCourse.ID">@Html.DisplayFor(_ => student.CurrentCourse.Name)</a>
+                }
+                else
+                {
+                    <p>N/A</p>
+                }
+                </td>
+                <td>
+                    <div class="btn-group btn-group-sm float-right" role="group">
+                        <a class="btn btn-info" asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">Details</a>
+                        <a class="btn btn-warning" asp-controller="Students" asp-action="Edit" asp-route-id="@student.ID">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Students" asp-action="Delete" asp-route-id="@student.ID">Remove</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

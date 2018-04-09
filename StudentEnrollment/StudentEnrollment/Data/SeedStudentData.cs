@@ -25,6 +25,7 @@ namespace StudentEnrollment.Data
                     {
                         FirstName = "Bob",
                         LastName = "Bobberson",
+                        EnrollmentDate = DateTime.Parse("2018-3-14"),
                         HighestCourseLevel = 0,
                         PassedInterview = false,
                         Placed = false,
@@ -35,6 +36,7 @@ namespace StudentEnrollment.Data
                     {
                         FirstName = "Wise",
                         LastName = "Guy",
+                        EnrollmentDate = DateTime.Parse("2018-3-23"),
                         HighestCourseLevel = 101,
                         PassedInterview = false,
                         Placed = false,
@@ -45,6 +47,7 @@ namespace StudentEnrollment.Data
                     {
                         FirstName = "Smooth",
                         LastName = "Criminal",
+                        EnrollmentDate = DateTime.Parse("2018-2-11"),
                         HighestCourseLevel = 201,
                         PassedInterview = false,
                         Placed = false,

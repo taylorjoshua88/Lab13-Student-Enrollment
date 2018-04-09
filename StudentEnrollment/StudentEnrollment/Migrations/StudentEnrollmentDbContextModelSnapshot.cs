@@ -58,6 +58,8 @@ namespace StudentEnrollment.Migrations
 
                     b.Property<int>("CurrentCourseID");
 
+                    b.Property<DateTime>("EnrollmentDate");
+
                     b.Property<string>("FirstName")
                         .IsRequired();
 
