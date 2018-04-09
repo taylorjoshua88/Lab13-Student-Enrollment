@@ -19,6 +19,7 @@ namespace StudentEnrollment.Models
                 new StudentIndexViewModel
                 {
                     Students = await context.Student.Include(s => s.CurrentCourse)
+                                                    .OrderBy(s => s.LastName)
                                                     .ToListAsync()
                 };
     }

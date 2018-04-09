@@ -22,6 +22,7 @@
             <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().LastName)</th>
             <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().FirstName)</th>
             <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().EnrollmentDate)</th>
+            <th scope="col">Course in Progress</th>
             <th scope="col">@Html.DisplayNameFor(m => m.Students.FirstOrDefault().CurrentCourse)</th>
             <th scope="col"></th>
         </tr>
@@ -29,11 +30,15 @@
     <tbody>
         @foreach (var student in Model.Students)
         {
-            <tr>
-                <td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@Html.DisplayFor(_ => student.LastName)</a></td>
-                <td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@Html.DisplayFor(_ => student.FirstName)</a></td>
-                <td>@Html.DisplayFor(_ => student.EnrollmentDate)</td>
-                <td>
+            <tr class="align-middle">
+                <td class="align-middle"><a asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@Html.DisplayFor(_ => student.LastName)</a></td>
+                <td class="align-middle"><a asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@Html.DisplayFor(_ => student.FirstName)</a></td>
+                <td class="align-middle">@Html.DisplayFor(_ => student.EnrollmentDate)</td>
+                <td class="align-middle">
+                    @(student.CurrentCourse.StartDate <= DateTime.Today &&
+                      student.CurrentCourse.EndDate >= DateTime.Today ? "Yes" : "No")
+                </td>
+                <td class="align-middle">
                 @if (student.CurrentCourse != null)
                 {
                     <a asp-controller="Courses" asp-action="Details" asp-route-id="@student.CurrentCourse.ID">@Html.DisplayFor(_ => student.CurrentCourse.Name)</a>
@@ -43,7 +48,7 @@
                     <p>N/A</p>
                 }
                 </td>
-                <td>
+                <td class="align-middle">
                     <div class="btn-group btn-group-sm float-right" role="group">
                         <a class="btn btn-info" asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">Details</a>
                         <a class="btn btn-warning" asp-controller="Students" asp-action="Edit" asp-route-id="@student.ID">Edit</a>
