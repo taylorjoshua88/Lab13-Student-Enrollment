@@ -74,5 +74,46 @@ namespace StudentEnrollment.Controllers
             // If no id is provided then just redirect to Index
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [ActionName("Remove")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CommitRemove(int id)
+        {
+            Student student;
+
+            try
+            {
+                student = await _context.Student.Where(s => s.ID == id)
+                                                .SingleAsync();
+            }
+            catch (Exception)
+            {
+                // The student wasn't found, alert the user and redirect to index
+                TempData["NotificationType"] = "alert-danger";
+                TempData["NotificationMessage"] = "Could not find the specified student to remove!";
+                return RedirectToAction("Index");
+            }
+
+            _context.Remove(student);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                // There was a database error. Allow the user a chance to retry
+                // TODO: Inject logger to perform proper logging
+                TempData["NotificationType"] = "alert-danger";
+                TempData["NotificationMessage"] = "Unable to remove student from database! Please try again.";
+                return View(student);
+            }
+
+            // Success! Notify the user and redirect to Index
+            TempData["NotificationType"] = "alert-success";
+            TempData["NotificationMessage"] = $"Sucessfully removed {student.FirstName} {student.LastName} from the database!";
+            return RedirectToAction("Index");
+        }
     }
 }

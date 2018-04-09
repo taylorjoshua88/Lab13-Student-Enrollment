@@ -225,8 +225,8 @@ namespace StudentEnrollment.Controllers
 
             try
             {
-                course = _context.Course.Where(c => c.ID == id)
-                                        .Single();
+                course = await _context.Course.Where(c => c.ID == id)
+                                              .SingleAsync();
             }
             catch (Exception)
             {
