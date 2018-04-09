@@ -37,7 +37,18 @@
         <strong>@ViewData["Description"]</strong>
     </div>
     <div class="container-fluid">
+        <!-- If TempData["NotificationMessage"] is set then display an alert -->
+        @if (TempData.ContainsKey("NotificationMessage"))
+        {
+            <div class="alert @(TempData["NotificationType"] ?? "alert-info")">
+                @TempData["NotificationMessage"]
+            </div>
+        }
+
+        <!-- Body -->
         @RenderBody()
+
+        <!-- Footer -->
         <p class="h6 mt-3 text-center">Copyright (C) 2018 <a href="mailto:taylor.joshua88@gmail.com">Joshua William Taylor</a></p>
     </div>
 

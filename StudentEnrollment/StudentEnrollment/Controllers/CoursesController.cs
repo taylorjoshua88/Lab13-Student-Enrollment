@@ -98,9 +98,25 @@ namespace StudentEnrollment.Controllers
             if (ModelState.IsValid)
             {
                 EntityEntry<Course> newCourse = _context.Add(course);
-                await _context.SaveChangesAsync();
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    // TODO: Inject logger into CoursesController for proper logging
+                    TempData["NotificationType"] = "alert-danger";
+                    TempData["NotificationMessage"] = 
+                        "An error occurred while trying to create the course! Please try again.";
+
+                    return View(course);
+                }
 
                 // Redirect to the Details view for the newly added course
+                TempData["NotificationType"] = "alert-success";
+                TempData["NotificationMessage"] = "Successfully added new course!";
+
                 return RedirectToAction("Details", new { newCourse.Entity.ID });
             }
 
