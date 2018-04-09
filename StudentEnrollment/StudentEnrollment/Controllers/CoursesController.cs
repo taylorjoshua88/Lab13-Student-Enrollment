@@ -160,7 +160,7 @@ namespace StudentEnrollment.Controllers
                 catch (Exception)
                 {
                     TempData["NotificationType"] = "alert-danger";
-                    TempData["NotificationMessage"] = "Could not edit the course! Please try again.";
+                    TempData["NotificationMessage"] = $"Could not edit {course.Name}! Please try again.";
                     return View(course);
                 }
 
@@ -211,6 +211,42 @@ namespace StudentEnrollment.Controllers
             }
 
             // If no id is provided then just redirect to Index
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> CommitDelete(int id)
+        {
+            Course course;
+
+            try
+            {
+                course = _context.Course.Where(c => c.ID == id)
+                                        .Single();
+            }
+            catch (Exception)
+            {
+                TempData["NotificationType"] = "alert-danger";
+                TempData["NotificationMessage"] = "Could not find the specified course to delete.";
+                return RedirectToAction("Index");
+            }
+
+            _context.Remove(course);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                TempData["NotificationType"] = "alert-danger";
+                TempData["NotificationMessage"] = $"Could not delete {course.Name}! Please try again.";
+                return View(course);
+            }
+
+            TempData["NotificationType"] = "alert-success";
+            TempData["NotificationMessage"] = $"Sucessfully deleted the {course.Name} course!";
             return RedirectToAction("Index");
         }
     }
