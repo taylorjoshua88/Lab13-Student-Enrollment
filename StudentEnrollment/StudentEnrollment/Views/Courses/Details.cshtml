@@ -7,17 +7,17 @@
 }
 
 <div class="row">
-    <div class="col-4 offset-2">
-        <div class="card">
+    <div class="col-xl-5 offset-xl-1 col-lg-6 offset-lg-0 col-md-12 offset-md-0">
+        <div class="card mb-2">
             <div class="card-header bg-light">
                 Course Details
             </div>
             <div class="card-body pt-3 pb-0">
-                    <ul class="nav nav-fill pb-2">
-                        <li class="nav-item"><a class="btn btn-info mr-1" asp-controller="Courses" asp-action="Index">Return to Overview</a></li>
-                        <li class="nav-item"><a class="btn btn-warning mr-1" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Course.ID">Edit Course</a></li>
-                        <li class="nav-item"><a class="btn btn-danger mr-1" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.Course.ID">Delete Course</a></li>
-                    </ul>
+                <div class="btn-group mb-2">
+                    <a class="btn btn-info" asp-controller="Courses" asp-action="Index">Return to Overview</a>
+                    <a class="btn btn-warning" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Course.ID">Edit Course</a>
+                    <a class="btn btn-danger" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.Course.ID">Delete Course</a>
+                </div>
                 <dl>
                     <dt>@Html.DisplayNameFor(c => c.Course.Name)</dt>
                     <dd>@Html.DisplayFor(c => c.Course.Name)</dd>
@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-xl-5 col-lg-6 col-md-12">
         <div class="card">
             <div class="card-header bg-light">
                 Students currently enrolled in this course
