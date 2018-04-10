@@ -46,7 +46,7 @@
                 <div class="list-group">
                     @foreach (var student in Model.Students)
                     {
-                        <a class="list-group-item list-group-item-action" asp-controller="Students" asp-action="Details">@student.LastName, @student.FirstName</a>
+                        <a class="list-group-item list-group-item-action" asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@student.LastName, @student.FirstName</a>
                     }
                 </div>
             </div>
