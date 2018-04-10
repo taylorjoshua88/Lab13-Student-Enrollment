@@ -1,0 +1,55 @@
+﻿@model CourseDetailViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Course.Name} - Course Details";
+    ViewData["Tagline"] = Model.Course.Name;
+    ViewData["Description"] = $"Details about the {Model.Course.Name} course.";
+}
+
+<div class="row">
+    <div class="col-xl-5 offset-xl-1 col-lg-6 offset-lg-0 col-md-12 offset-md-0">
+        <div class="card mb-2">
+            <div class="card-header bg-light">
+                Course Details
+            </div>
+            <div class="card-body pt-3 pb-0">
+                <div class="btn-group mb-2">
+                    <a class="btn btn-info" asp-controller="Courses" asp-action="Index">Return to Overview</a>
+                    <a class="btn btn-warning" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Course.ID">Edit Course</a>
+                    <a class="btn btn-danger" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.Course.ID">Delete Course</a>
+                </div>
+                <dl>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Name)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Name)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Instructor)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Instructor)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Iteration)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Iteration)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Level)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Level)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.StartDate)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.StartDate)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.EndDate)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.EndDate)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Course.Technology)</dt>
+                    <dd>@Html.DisplayFor(c => c.Course.Technology)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header bg-light">
+                Students currently enrolled in this course
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    @foreach (var student in Model.Students)
+                    {
+                        <a class="list-group-item list-group-item-action" asp-controller="Students" asp-action="Details" asp-route-id="@student.ID">@student.LastName, @student.FirstName</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

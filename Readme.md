@@ -1,80 +1,156 @@
-![cf](http://i.imgur.com/7v5ASc8.png) Lab 13: Student Enrollment
-=====================================
+# Student and Course Administration
 
-## To Submit this Assignment
-- fork this repository
-- write all of your code in a directory named `lab-#`; + `<your name>` **e.g.** `lab12-amanda`
-- push to your repository
-- submit a pull request to this repository
-- submit a link to your PR in canvas
+**Author**: Joshua Taylor
+**Version**: 1.0.0
 
+## Overview
 
-## Directions
+Student and Course Adminstration demonstrates the implementation of create,
+read, update, and delete (CRUS) operations across multiple tables within a 
+database without using the scaffolding features found in ASP.NET Core, MVC, 
+Entity Framework, and Microsoft Visual Studio.
 
-You are responsible for creating a student enrollment system for a school for the school administration. We can assume that 
-only admins will be accessing this site, so no need for authorization/authentication. Here are the requirements.
+The application provides an interface for administrators to quickly view all
+of their educational institutions students and courses. In addition, these
+administrators can create, read, update, and delete these entries. Logic is
+provided to ensure that courses are not dropped which still have students
+enrolled in them.
 
-1. Students can only be registerd for one class at a time. 
-1. the administration should be able to view all the students enrolled in a specific course. 
-1. View all students enrolled all at once and the class they are registered for
-1. View Course information independently. 
-1. Remove specific students
-1. Remove courses
-1. Seach for specific students
-1. Search for courses
-1. Edit a student's profile
-1. Edit a course's information
+## Getting Started
 
-The workflow of the website should be:
-1. Create a new course
-1. Create a new student
-	- In the registration process, the student will be enrolled into a specific course 
-1. When viewing all the students, their course is visible
-1. When viewing an individual course, all the students in that course should visible.
-1. We can use the CRUD operations on both courses and students
-1. You cannot remove a course if it has students enrolled in it. 
+Student and Course Administration targets the .NET Core 2.0 platform, ASP.NET Core, Entity
+Framework Core and the MVC Framework. The .NET Core 2.0 SDK can be downloaded 
+from the following URL for Windows, Linux, and macOS:
 
-1. Add HTML and CSS to the site to make it 'client ready'
+https://www.microsoft.com/net/download/
 
+Additionally, the Entity Framework tools will need to be installed via the
+NuGet Package Manager Console in order to create a migration for the local,
+development database (run from the solution root):
 
-## ReadMe
-A README is a module consumer's first -- and maybe only -- look into your creation. The consumer wants a module to fulfill their need, so you must explain exactly what need your module fills, and how effectively it does so.
-<br />
-Your job is to
+    Install-Package Microsoft.EntityFrameworkCore.Tools
+	Add-Migration Initial
+	Update-Database
 
-1. tell them what it is (with context)
-2. show them what it looks like in action
-3. show them how they use it
-4. tell them any other relevant details
-<br />
+The dotnet CLI utility would then be used to build and run the application:
 
-This is ***your*** job. It's up to the module creator to prove that their work is a shining gem in the sea of slipshod modules. Since so many developers' eyes will find their way to your README before anything else, quality here is your public-facing measure of your work.
+    cd StudentEnrollment
+    dotnet build
+    dotnet run
 
-<br /> <br /> Refer to the sample-README in the class repo for an example. 
-- [Reference](https://github.com/noffle/art-of-readme)
+The _dotnet run_ command will start an HTTP server on localhost using Kestrel
+which can be accessed by the user's browser pointing to localhost on the port
+provided by _dotnet run_'s console output.
 
-## Rubric
-**Tests are not required for this lab**
-- 7pts: Program meets all requirements described in Lab directions
+Additionally, users can build and run Movie Library using Visual Studio
+2017 or greater by opening the solution file at the root of this repository.
+All dependencies are referenced via NuGet and should be brought in during
+the restore process. If this does not occur, the following will download all
+needed dependencies (other than the Entity Framework tools):
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	7       | Program runs as expected, no exceptions during execution |
-	5       | Program meets all of the  functionality requirements described above // Program runs/compiles, Program contains logic/process errors|
-	4       | Program meets most of the functionality requirements descibed above // Program runs/compiles, but throws exceptions during execution |
-	3       | Program missing most of the functionality requirements descibed above // Program runs/compiles |
-	2       | Missing tests // tests are not passing // not enough valid tests |
-	2       | Missing Readme Document // Readme Document does not meet standards |
-	0       | Program does not compile/run. Build Errors // Required naming conventions not met |
-	0       | No Submission |
+    dotnet restore
 
-- 3pts: Code meets industry standards
-	- These points are only awardable if you score at minimum a 5/7 on above criteria
+Unit testing is provided via the xUnit framework and is included as a NuGet
+dependency of the StudentEnrollmentTest project within the solution.
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	3       | Code meets Industry Standards // methods and variables namings are appropriate // Selective and iterative statements are used appropriately, Fundamentals are propertly executed // Clearly and cleanly commented |
-	2       | syntax for naming conventions are not correct (camelCasing and PascalCasing are used appropriately) // slight errors in use of fundamentals // Missing some comments |
-	1       | Inappropriate naming conventions, and/or inappropriate use of fundamentals // Code is not commented  |
-	0       | No Submission or incomplete submission |
+## Example
 
+#### Overview of Students ####
+![Students Overview Screenshot](/assets/studentOverview.JPG)
+#### Adding Students ####
+![Adding Students Screenshot](/assets/studentAdd.JPG)
+#### View Student Profile ####
+![Student Profile Screenshot](/assets/studentDetails.JPG)
+#### Removing Student ####
+![Removing Student Screenshot](/assets/studentRemove.JPG)
+#### Overview of Courses ####
+![Courses Overview Screenshot](/assets/courseOverview.JPG)
+#### Course Details ####
+![Course Details Screenshot](/assets/courseDetails.JPG)
+#### Editing Courses ####
+![Editing Course Screenshot](/assets/courseEdit.JPG)
+#### Deleting Courses ####
+![Deleting Course Screenshot](/assets/courseDelete.JPG)
+
+## Architecture
+
+### Controllers
+
+#### HomeController ####
+
+_HomeController_ provides actions for displaying static pages to the
+user in the form of an _About_ action, an _Index_ action and a _Contact_ 
+action.
+
+#### CoursesController ####
+
+_CoursesController_ provides actions for performing CRUD operations
+on courses within the backend database. The _Index_ action provides
+an overview of all courses along with filtering capabilities. The 
+_Details_ action provides information about a specific courses as well
+as providing links to the students currently enrolled in that course.
+The _Edit_, _Create_, and _Delete_ actions provide forms for entering in
+data to be updated or created on the database via HTTP GET that are
+then delivered to the server for validation and database manipulation
+via POST after the user submits them. In the case of _Delete_, this is 
+simply a confirmation prompt. A token is used to ensure that forged POST 
+requests are not accepted.
+
+#### StudentsController ####
+
+_StudentsController_ provides actions for performing CRUD operations
+on students within the backend database. The _Index_ action provides
+an overview of all students along with filtering capabilities. The
+_Details_ action provides a specific student's profiles along with a
+link to the course that that student is currently enrolled in. The
+_Edit_, _Create_, and _Remove_ actions provide forms for entering in
+data to be updated or created on the database via HTTP GET that are
+then deliverd to the server for validation and database manipulation
+via POST after the user submits them. In the case of _Remove_, this is
+simply a confirmation prompt. A token is used to ensure that forged
+POST request are not accepted.
+
+### Data Model
+
+#### Student ####
+
+Students are represented using the _Student_ class on the code side. This
+class contains the following fields:
+
+- ID (primary key, int)
+- FirstName (string)
+- LastName (string)
+- EnrollmentDate (DateTime)
+- CurrentCourse (foreign reference, Course)
+- CurrentCourseId (foreign key, int)
+- HighestCourseLevel (int)
+- PassedInterview (bool)
+- Placed (bool)
+
+#### Course ####
+
+Courses are represented using the _Course_ class on the code side. This
+class contains the following fields:
+
+- ID (primary key, int)
+- Name (string)
+- Iteration (string)
+- Level (int)
+- StartDate (DateTime)
+- EndDate (DateTime)
+- Technology (enumeration)
+- Instructor (string)
+
+### Frontend
+
+All frontend code has been developed using Bootstrap and JQuery. The
+Cerulean CSS style for Bootstrap was used for this project and can be 
+acquired [here](https://bootswatch.com/cerulean/).
+
+All views have been optimized to display properly on any size screen.
+Please contact the author if this is found to not be the case.
+
+## Change Log
+
+* 4.10.2018 [Joshua Taylor](mailto:taylor.joshua88@gmail.com) - Initial
+release. All included tests are passing.

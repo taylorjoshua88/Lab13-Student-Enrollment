@@ -1,0 +1,67 @@
+﻿@model Course
+
+@{
+    ViewData["Title"] = "Create";
+    ViewData["Tagline"] = "Create New Course";
+    ViewData["Description"] = "Create a new course of instruction for your institution.";
+}
+
+<form class="offset-xl-3 offset-lg-3 offset-md-1 offset-sm-0" asp-controller="Courses" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm">
+            <label asp-for="Name"></label>
+            <input class="form-control" asp-for="Name" />
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+    </div>
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm mr-1">
+            <label asp-for="Instructor"></label>
+            <input class="form-control" asp-for="Instructor" />
+            <span class="text-danger" asp-validation-for="Instructor"></span>
+        </div>
+
+        <div class="form-group col-sm">
+            <label asp-for="Technology"></label>
+            <select class="form-control" asp-for="Technology" asp-items="Html.GetEnumSelectList<Technology>()"></select>
+            <span class="text-danger" asp-validation-for="Technology"></span>
+        </div>
+    </div>
+
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm mr-1">
+            <label asp-for="Iteration"></label>
+            <input class="form-control" asp-for="Iteration" />
+            <span class="text-danger" asp-validation-for="Iteration"></span>
+        </div>
+
+        <div class="form-group col-sm">
+            <label asp-for="Level"></label>
+            <input class="form-control" asp-for="Level" />
+            <span class="text-danger" asp-validation-for="Level"></span>
+        </div>
+    </div>
+
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm">
+            <label asp-for="StartDate"></label>
+            <input class="form-control" asp-for="StartDate" />
+            <span class="text-danger" asp-validation-for="StartDate"></span>
+        </div>
+
+        <div class="form-group col-sm">
+            <label asp-for="EndDate"></label>
+            <input class="form-control" asp-for="EndDate" />
+            <span class="text-danger" asp-validation-for="EndDate"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success ml-3" type="submit">Create Course</button>
+        <a asp-controller="Courses" asp-action="Index" class="btn btn-danger">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

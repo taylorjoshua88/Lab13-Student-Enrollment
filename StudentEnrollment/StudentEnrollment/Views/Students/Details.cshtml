@@ -1,0 +1,66 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = $"{Model.LastName}, {Model.FirstName} - Student Details";
+    ViewData["Tagline"] = $"{Model.LastName}, {Model.FirstName}";
+    ViewData["Description"] = $"Details about {Model.FirstName} {Model.LastName}.";
+}
+
+<div class="row">
+    <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+        <div class="card">
+            <div class="card-header bg-light">
+                Student Details
+            </div>
+            <div class="card-body pt-3 pb-0">
+                <div class="btn-group mb-2">
+                    <a class="btn btn-info" asp-controller="Students" asp-action="Index">Return to Overview</a>
+                    <a class="btn btn-warning" asp-controller="Students" asp-action="Edit" asp-route-id="@Model.ID">Edit Student</a>
+                    <a class="btn btn-danger" asp-controller="Students" asp-action="Remove" asp-route-id="@Model.ID">Remove Student</a>
+                </div>
+                <dl>
+                    <dt>@Html.DisplayNameFor(c => c.LastName)</dt>
+                    <dd>@Html.DisplayFor(c => c.LastName)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.FirstName)</dt>
+                    <dd>@Html.DisplayFor(c => c.FirstName)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.EnrollmentDate)</dt>
+                    <dd>@Html.DisplayFor(c => c.EnrollmentDate)</dd>
+                    <dt>Course in Progress</dt>
+                    <dd class="align-middle">
+                        @if (Model.CurrentCourse != null)
+                        {
+                            @(Model.CurrentCourse?.StartDate <= DateTime.Today &&
+                              Model.CurrentCourse?.EndDate >= DateTime.Today ? "Yes" : "No")
+                        }
+                    </dd>
+                    <dt>@Html.DisplayNameFor(c => c.CurrentCourse)</dt>
+                    <dd>
+                        @if (Model.CurrentCourse != null)
+                        {
+                            <a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.CurrentCourse.ID">@Html.DisplayFor(c => c.CurrentCourse.Name)</a>
+                        }
+                        else
+                        {
+                            <p>Not currently enrolled in a course.</p>
+                        }
+                    </dd>
+                    <dt>@Html.DisplayNameFor(c => c.HighestCourseLevel)</dt>
+                    <dd>
+                        @if (Model.HighestCourseLevel > 0)
+                        {
+                            @Html.DisplayFor(c => c.HighestCourseLevel)
+                        }
+                        else
+                        {
+                            <p>Has not attended any previous courses.</p>
+                        }
+                    </dd>
+                    <dt>@Html.DisplayNameFor(c => c.PassedInterview)</dt>
+                    <dd>@Html.DisplayFor(c => c.PassedInterview)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Placed)</dt>
+                    <dd>@Html.DisplayFor(c => c.Placed)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

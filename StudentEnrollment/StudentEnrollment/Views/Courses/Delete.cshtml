@@ -1,0 +1,42 @@
+﻿@model Course
+
+@{
+    ViewData["Title"] = $"{Model.Name} - Confirm Course Deletion";
+    ViewData["Tagline"] = Model.Name;
+    ViewData["Description"] = $"Do you really want to delete the {Model.Name} course?";
+}
+
+<div class="row">
+    <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+        <div class="card">
+            <div class="card-header bg-light">
+                Course Details
+            </div>
+            <div class="card-body pt-3 pb-0">
+                <strong class="text-danger">Do you really want to delete this course?</strong>
+                <form asp-controller="Courses" asp-action="Delete" method="post">
+                    <div class="btn-group mt-2 mb-2">
+                        <button type="submit" class="btn btn-warning" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.ID">Confirm Deletion</button>
+                        <a class="btn btn-danger" asp-controller="Courses" asp-action="Index">Cancel</a>
+                    </div>
+                </form>
+                <dl>
+                    <dt>@Html.DisplayNameFor(c => c.Name)</dt>
+                    <dd>@Html.DisplayFor(c => c.Name)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Instructor)</dt>
+                    <dd>@Html.DisplayFor(c => c.Instructor)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Iteration)</dt>
+                    <dd>@Html.DisplayFor(c => c.Iteration)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Level)</dt>
+                    <dd>@Html.DisplayFor(c => c.Level)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.StartDate)</dt>
+                    <dd>@Html.DisplayFor(c => c.StartDate)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.EndDate)</dt>
+                    <dd>@Html.DisplayFor(c => c.EndDate)</dd>
+                    <dt>@Html.DisplayNameFor(c => c.Technology)</dt>
+                    <dd>@Html.DisplayFor(c => c.Technology)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

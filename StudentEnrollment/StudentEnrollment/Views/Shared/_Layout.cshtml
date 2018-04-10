@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Student and Course Administration</title>
+    <!-- JQuery and Popper -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <!-- Bootswatch Cerulean Stylesheet -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <!-- StudentEnrollment Stylesheet -->
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
+    <!-- Bootstrap -->
+    <environment include="Development">
+        <script src="~/js/bootstrap.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </environment>
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Student and Course Administration</a>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")" asp-controller="Students" asp-action="Index">Students</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")" asp-controller="Courses" asp-action="Index">Courses</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "About" ? "active" : "")" asp-controller="Home" asp-action="About">About</a></li>
+                <li class="nav-item"><a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewData["Title"] == "Contact" ? "active" : "")" asp-controller="Home" asp-action="Contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="jumbotron text-center mb-2">
+        <h1>@ViewData["Tagline"]</h1>
+        <strong>@ViewData["Description"]</strong>
+    </div>
+    <div class="container-fluid">
+        <!-- If TempData["NotificationMessage"] is set then display an alert -->
+        @if (TempData.ContainsKey("NotificationMessage"))
+        {
+            <div class="alert alert-dismissible @(TempData.ContainsKey("NotificationType") ? TempData["NotificationType"] : "alert-info")">
+                @TempData["NotificationMessage"]
+            </div>
+        }
+
+        <!-- Body -->
+        @RenderBody()
+
+        <!-- Footer -->
+        <p class="h6 mt-3 text-center">Copyright (C) 2018 <a href="mailto:taylor.joshua88@gmail.com">Joshua William Taylor</a></p>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
