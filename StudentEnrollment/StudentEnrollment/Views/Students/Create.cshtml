@@ -1,9 +1,9 @@
 ﻿@model Student
 
 @{
-    ViewData["Title"] = $"{Model.LastName}, {Model.FirstName} - Edit Student Profile";
-    ViewData["Tagline"] = $"{Model.LastName}, {Model.FirstName}";
-    ViewData["Description"] = $"Editing {Model.FirstName} {Model.LastName}'s student profile.";
+    ViewData["Title"] = "Add New Student";
+    ViewData["Tagline"] = "Add New Student";
+    ViewData["Description"] = "Add a New Student to Your Institution.";
 }
 
 <form class="offset-xl-3 offset-lg-3 offset-md-1 offset-sm-0" asp-controller="Students" asp-action="Edit" method="post">
@@ -68,7 +68,7 @@
     </div>
 
     <div class="form-group">
-        <button class="btn btn-warning ml-3" type="submit">Modify Student</button>
+        <button class="btn btn-success ml-3" type="submit">Add Student</button>
         <a asp-controller="Students" asp-action="Index" class="btn btn-danger">Cancel</a>
     </div>
 </form>

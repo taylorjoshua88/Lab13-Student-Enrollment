@@ -47,6 +47,45 @@ namespace StudentEnrollment.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            ViewData["AvailableCourses"] = await _context.Course.Select(c => c)
+                                                                .ToListAsync();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("ID,LastName,FirstName,EnrollmentDate,HighestCourseLevel,CurrentCourseId,PassedInterview,Placed")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                // HACK: I cannot get the SelectList working properly after hours of research and trying literally EVERYTHING!!!
+                //       This works for now.
+                student.CurrentCourse = await _context.Course.Where(c => c.ID == student.CurrentCourseId).SingleAsync();
+                EntityEntry<Student> createStudent = _context.Update(student);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch
+                {
+                    TempData["NotificationType"] = "alert-danger";
+                    TempData["NotificationMessage"] = $"Could not create {student.FirstName} {student.LastName}! Please try again.";
+                    return View(student);
+                }
+
+                TempData["NotificationType"] = "alert-success";
+                TempData["NotificationMessage"] = $"Successfully added {student.FirstName} {student.LastName} to the database!";
+                return RedirectToAction("Details", new { student.ID });
+            }
+
+            return View(student);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id.HasValue)
@@ -89,7 +128,7 @@ namespace StudentEnrollment.Controllers
         {
             if (ModelState.IsValid)
             {
-                // HACK: I cannot get the SelectList working after hours of research and trying literally EVERYTHING!!!
+                // HACK: I cannot get the SelectList working properly after hours of research and trying literally EVERYTHING!!!
                 //       This works for now.
                 student.CurrentCourse = await _context.Course.Where(c => c.ID == student.CurrentCourseId).SingleAsync();
                 EntityEntry<Student> editStudent = _context.Update(student);
