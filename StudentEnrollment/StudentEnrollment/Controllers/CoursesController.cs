@@ -135,8 +135,8 @@ namespace StudentEnrollment.Controllers
                 catch (Exception)
                 {
                     // Could not match id, display an error message and redirect to Index
-                    TempData["NotificationType"] = "alert-danger";
-                    TempData["NotificationMessage"] = "Could not find the specified course to edit!";
+                    TempData["NotificationType"] = "alert-warning";
+                    TempData["NotificationMessage"] = "Could not find the specified course to edit.";
                     return RedirectToAction("Index");
                 }
             }

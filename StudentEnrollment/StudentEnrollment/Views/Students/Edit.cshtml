@@ -1,0 +1,48 @@
+﻿@model StudentEditViewModel
+
+@{
+    ViewData["Title"] = $"{Model.Student.LastName}, {Model.Student.FirstName} - Edit Student Profile";
+    ViewData["Tagline"] = $"{Model.Student.LastName}, {Model.Student.FirstName}";
+    ViewData["Description"] = $"Editing {Model.Student.FirstName} {Model.Student.LastName}'s student profile.";
+}
+
+<form class="offset-xl-3 offset-lg-3 offset-md-1 offset-sm-0" asp-controller="Courses" asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm mr-1">
+            <label asp-for="Student.LastName"></label>
+            <input class="form-control" asp-for="Student.LastName" />
+            <span class="text-danger" asp-validation-for="Student.LastName"></span>
+        </div>
+
+        <div class="form-group col-sm">
+            <label asp-for="Student.FirstName"></label>
+            <input class="form-control" asp-for="Student.FirstName" />
+            <span class="text-danger" asp-validation-for="Student.FirstName"></span>
+        </div>
+    </div>
+
+    <div class="form-group row col-xl-8 col-lg-9 col-md-11 col-sm-12">
+        <div class="form-group col-sm mr-1">
+            <label asp-for="Student.CurrentCourse"></label>
+            <select class="form-control" asp-for="Student.CurrentCourse" asp-items="@(new SelectList(Model.AvailableCourses, "ID", "Name"))"></select>
+            <span class="text-danger" asp-validation-for="Student.CurrentCourse"></span>
+        </div>
+<!--
+        <div class="form-group col-sm">
+            <label asp-for="FirstName"></label>
+            <input class="form-control" asp-for="FirstName" />
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+        </div>
+-->
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-warning ml-3" type="submit">Modify Course</button>
+        <a asp-controller="Students" asp-action="Index" class="btn btn-danger">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -11,12 +11,12 @@ namespace StudentEnrollment.Models
         public int ID { get; set; }
 
         [Display(Name = "First Name")]
-        [RegularExpression("^[a-Z]+$", ErrorMessage = "Only letters [a-Z] are supported")]
+        [StringLength(60, MinimumLength = 2)]
         [Required]
         public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
-        [RegularExpression("^[a-Z]+$", ErrorMessage = "Only letters [a-Z] are supported")]
+        [StringLength(60, MinimumLength = 2)]
         [Required]
         public string LastName { get; set; }
 

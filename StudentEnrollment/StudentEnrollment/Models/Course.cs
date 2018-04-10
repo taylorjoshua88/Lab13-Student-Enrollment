@@ -36,6 +36,11 @@ namespace StudentEnrollment.Models
         [StringLength(60, MinimumLength = 3)]
         [Required]
         public string Instructor { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public enum Technology

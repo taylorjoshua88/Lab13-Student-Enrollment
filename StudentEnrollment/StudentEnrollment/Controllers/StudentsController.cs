@@ -46,6 +46,31 @@ namespace StudentEnrollment.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id.HasValue)
+            {
+                try
+                {
+                    StudentEditViewModel viewModel = await StudentEditViewModel.CreateViewModel(
+                        id.Value, _context);
+                    return View(viewModel);
+                }
+                catch (Exception)
+                {
+                    // Could not match id, display an error message and redirect to Index
+                    // TODO: Inject logger to perform proper logging
+                    TempData["NotificationType"] = "alert-warning";
+                    TempData["NotificationMessage"] = "Could not find the specified student to edit.";
+                    return RedirectToAction("Index");
+                }
+            }
+
+            // Attempted to edit a student without providing an id will simply redirect to Index
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Remove(int? id)
         {
             if (id.HasValue)
