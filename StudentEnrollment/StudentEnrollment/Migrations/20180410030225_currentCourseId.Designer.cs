@@ -12,9 +12,10 @@ using System;
 namespace StudentEnrollment.Migrations
 {
     [DbContext(typeof(StudentEnrollmentDbContext))]
-    partial class StudentEnrollmentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180410030225_currentCourseId")]
+    partial class currentCourseId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

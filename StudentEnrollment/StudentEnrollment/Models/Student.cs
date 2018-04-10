@@ -26,8 +26,10 @@ namespace StudentEnrollment.Models
         public DateTime EnrollmentDate { get; set; }
 
         [Display(Name = "Current Course")]
-        [Required]
         public Course CurrentCourse { get; set; }
+
+        [Required]
+        public int CurrentCourseId { get; set; }
 
         [Display(Name = "Highest Level Completed")]
         [Required]

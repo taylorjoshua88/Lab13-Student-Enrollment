@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using StudentEnrollment.Data;
 using StudentEnrollment.Models;
 
@@ -52,9 +53,20 @@ namespace StudentEnrollment.Controllers
             {
                 try
                 {
+                    // Had to switch away from using view model due to validation problems
+                    /*
                     StudentEditViewModel viewModel = await StudentEditViewModel.CreateViewModel(
                         id.Value, _context);
-                    return View(viewModel);
+                    */
+
+                    Student student = await _context.Student.Where(s => s.ID == id)
+                                                            .Include(s => s.CurrentCourse)
+                                                            .SingleAsync();
+
+                    ViewData["AvailableCourses"] = await _context.Course.Select(c => c)
+                                                                        .ToListAsync();
+
+                    return View(student);
                 }
                 catch (Exception)
                 {
@@ -68,6 +80,37 @@ namespace StudentEnrollment.Controllers
 
             // Attempted to edit a student without providing an id will simply redirect to Index
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+            [Bind("ID,LastName,FirstName,EnrollmentDate,HighestCourseLevel,CurrentCourseId,PassedInterview,Placed")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                // HACK: I cannot get the SelectList working after hours of research and trying literally EVERYTHING!!!
+                //       This works for now.
+                student.CurrentCourse = await _context.Course.Where(c => c.ID == student.CurrentCourseId).SingleAsync();
+                EntityEntry<Student> editStudent = _context.Update(student);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch
+                {
+                    TempData["NotificationType"] = "alert-danger";
+                    TempData["NotificationMessage"] = $"Could not edit {student.FirstName} {student.LastName}! Please try again.";
+                    return View(student);
+                }
+
+                TempData["NotificationType"] = "alert-success";
+                TempData["NotificationMessage"] = $"Successfully modified {student.FirstName} {student.LastName} in the database!";
+                return RedirectToAction("Details", new { student.ID });
+            }
+
+            return View(student);
         }
 
         [HttpGet]
