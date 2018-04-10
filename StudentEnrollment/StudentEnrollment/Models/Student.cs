@@ -30,6 +30,7 @@ namespace StudentEnrollment.Models
         public Course CurrentCourse { get; set; }
 
         [Display(Name = "Highest Level Completed")]
+        [Required]
         public int HighestCourseLevel { get; set; } = 0;
 
         [Display(Name = "Passed Qualifying Interview")]
