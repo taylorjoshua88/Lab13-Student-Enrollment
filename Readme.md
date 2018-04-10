@@ -152,5 +152,5 @@ Please contact the author if this is found to not be the case.
 
 ## Change Log
 
-* 4.10.2018 [Joshua Taylor](mailto:taylor.joshua88@gmail.com) - Initial
+* 4.9.2018 [Joshua Taylor](mailto:taylor.joshua88@gmail.com) - Initial
 release. All included tests are passing.
