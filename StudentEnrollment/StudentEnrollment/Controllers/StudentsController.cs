@@ -19,9 +19,10 @@ namespace StudentEnrollment.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string nameFilter, string courseFilter)
         {
-            return View(await StudentIndexViewModel.CreateViewModel(_context));
+            return View(await StudentIndexViewModel.CreateViewModel(
+                nameFilter, courseFilter, _context));
         }
 
         public async Task<IActionResult> Details(int? id)

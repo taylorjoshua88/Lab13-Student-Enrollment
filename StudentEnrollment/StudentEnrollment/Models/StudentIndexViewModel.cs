@@ -15,12 +15,28 @@ namespace StudentEnrollment.Models
         public List<Student> Students { get; set; }
 
         public static async Task<StudentIndexViewModel>
-            CreateViewModel(StudentEnrollmentDbContext context) =>
-                new StudentIndexViewModel
-                {
-                    Students = await context.Student.Include(s => s.CurrentCourse)
+            CreateViewModel(string nameFilter, string courseFilter, 
+                            StudentEnrollmentDbContext context)
+        {
+            StudentIndexViewModel viewModel = new StudentIndexViewModel();
+
+            IQueryable<Student> studentsQuery = context.Student.Select(s => s);
+
+            if (!string.IsNullOrWhiteSpace(nameFilter))
+            {
+                studentsQuery = studentsQuery.Where(s => s.FirstName.Contains(nameFilter) ||
+                                                         s.LastName.Contains(nameFilter));
+            }
+            if (!string.IsNullOrWhiteSpace(courseFilter))
+            {
+                studentsQuery = studentsQuery.Where(s => s.CurrentCourse.Name.Contains(courseFilter));
+            }
+
+            viewModel.Students = await studentsQuery.Include(s => s.CurrentCourse)
                                                     .OrderBy(s => s.LastName)
-                                                    .ToListAsync()
-                };
+                                                    .ToListAsync();
+
+            return viewModel;
+        }
     }
 }
