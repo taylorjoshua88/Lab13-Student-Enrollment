@@ -15,25 +15,31 @@ namespace StudentEnrollmentTest
         [Fact]
         public void CanGetIndexView()
         {
+            // Arrange
             HomeController controller = new HomeController();
 
-            Assert.IsAssignableFrom<IActionResult>(controller.Index());
+            // Assert
+            Assert.IsType<ViewResult>(controller.Index());
         }
 
         [Fact]
         public void CanGetAboutView()
         {
+            // Arrange
             HomeController controller = new HomeController();
 
-            Assert.IsAssignableFrom<IActionResult>(controller.About());
+            // Assert
+            Assert.IsType<ViewResult>(controller.Index());
         }
 
         [Fact]
         public void CanGetContactView()
         {
+            // Arrange
             HomeController controller = new HomeController();
 
-            Assert.IsAssignableFrom<IActionResult>(controller.Contact());
+            // Assert
+            Assert.IsType<ViewResult>(controller.Index());
         }
     }
 }
