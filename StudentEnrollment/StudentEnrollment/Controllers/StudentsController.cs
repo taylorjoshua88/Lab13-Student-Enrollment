@@ -37,8 +37,8 @@ namespace StudentEnrollment.Controllers
                 }
                 catch (Exception)
                 {
-                    TempData["NotificationType"] = "alert-warning";
-                    TempData["NotificationMessage"] = "Could not find the specified student!";
+                    // TempData["NotificationType"] = "alert-warning";
+                    // TempData["NotificationMessage"] = "Could not find the specified student!";
                     return RedirectToAction("Index");
                 }
             }
@@ -73,13 +73,13 @@ namespace StudentEnrollment.Controllers
                 }
                 catch
                 {
-                    TempData["NotificationType"] = "alert-danger";
-                    TempData["NotificationMessage"] = $"Could not create {student.FirstName} {student.LastName}! Please try again.";
+                    // TempData["NotificationType"] = "alert-danger";
+                    // TempData["NotificationMessage"] = $"Could not create {student.FirstName} {student.LastName}! Please try again.";
                     return View(student);
                 }
 
-                TempData["NotificationType"] = "alert-success";
-                TempData["NotificationMessage"] = $"Successfully added {student.FirstName} {student.LastName} to the database!";
+                // TempData["NotificationType"] = "alert-success";
+                // TempData["NotificationMessage"] = $"Successfully added {student.FirstName} {student.LastName} to the database!";
                 return RedirectToAction("Details", new { student.ID });
             }
 
@@ -112,8 +112,8 @@ namespace StudentEnrollment.Controllers
                 {
                     // Could not match id, display an error message and redirect to Index
                     // TODO: Inject logger to perform proper logging
-                    TempData["NotificationType"] = "alert-warning";
-                    TempData["NotificationMessage"] = "Could not find the specified student to edit.";
+                    // TempData["NotificationType"] = "alert-warning";
+                    // TempData["NotificationMessage"] = "Could not find the specified student to edit.";
                     return RedirectToAction("Index");
                 }
             }
@@ -140,13 +140,13 @@ namespace StudentEnrollment.Controllers
                 }
                 catch
                 {
-                    TempData["NotificationType"] = "alert-danger";
-                    TempData["NotificationMessage"] = $"Could not edit {student.FirstName} {student.LastName}! Please try again.";
+                    // TempData["NotificationType"] = "alert-danger";
+                    // TempData["NotificationMessage"] = $"Could not edit {student.FirstName} {student.LastName}! Please try again.";
                     return View(student);
                 }
 
-                TempData["NotificationType"] = "alert-success";
-                TempData["NotificationMessage"] = $"Successfully modified {student.FirstName} {student.LastName} in the database!";
+                // TempData["NotificationType"] = "alert-success";
+                // TempData["NotificationMessage"] = $"Successfully modified {student.FirstName} {student.LastName} in the database!";
                 return RedirectToAction("Details", new { student.ID });
             }
 
@@ -170,8 +170,8 @@ namespace StudentEnrollment.Controllers
                 {
                     // The student was not found, notify the user
                     // TODO: Inject logger to provide proper logging of this
-                    TempData["NotificationType"] = "alert-danger";
-                    TempData["NotificationMessage"] = "Could not find the specified student to remove!";
+                    // TempData["NotificationType"] = "alert-danger";
+                    // TempData["NotificationMessage"] = "Could not find the specified student to remove!";
                     return RedirectToAction("Index");
                 }
 
@@ -198,8 +198,8 @@ namespace StudentEnrollment.Controllers
             catch (Exception)
             {
                 // The student wasn't found, alert the user and redirect to index
-                TempData["NotificationType"] = "alert-danger";
-                TempData["NotificationMessage"] = "Could not find the specified student to remove!";
+                // TempData["NotificationType"] = "alert-danger";
+                // TempData["NotificationMessage"] = "Could not find the specified student to remove!";
                 return RedirectToAction("Index");
             }
 
@@ -213,14 +213,14 @@ namespace StudentEnrollment.Controllers
             {
                 // There was a database error. Allow the user a chance to retry
                 // TODO: Inject logger to perform proper logging
-                TempData["NotificationType"] = "alert-danger";
-                TempData["NotificationMessage"] = "Unable to remove student from database! Please try again.";
+                // TempData["NotificationType"] = "alert-danger";
+                // TempData["NotificationMessage"] = "Unable to remove student from database! Please try again.";
                 return View(student);
             }
 
             // Success! Notify the user and redirect to Index
-            TempData["NotificationType"] = "alert-success";
-            TempData["NotificationMessage"] = $"Sucessfully removed {student.FirstName} {student.LastName} from the database!";
+            // TempData["NotificationType"] = "alert-success";
+            // TempData["NotificationMessage"] = $"Sucessfully removed {student.FirstName} {student.LastName} from the database!";
             return RedirectToAction("Index");
         }
     }

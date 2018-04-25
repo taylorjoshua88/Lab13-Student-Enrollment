@@ -12,114 +12,453 @@ namespace StudentEnrollmentTest
 {
     public class StudentsControllerTest
     {
-        // Cannot get this to work
-        /*
         [Fact]
-        public async void CanCreateStudent()
+        public async void CanGetIndexWithViewModel()
         {
             DbContextOptions<StudentEnrollmentDbContext> options =
                 new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
-                    .UseInMemoryDatabase("TestDB")
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
                     .Options;
 
             using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
             {
+                // Arrange
                 StudentsController controller = new StudentsController(context);
-                int beforeStudentCount = context.Student.Count();
-                await controller.Create(new Student()
+
+                Course newCourse = new Course()
                 {
-                    CurrentCourse = new Course(),
-                    CurrentCourseId = 0,
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
                     EnrollmentDate = DateTime.Today,
-                    FirstName = "asdf",
-                    LastName = "qwer",
-                    HighestCourseLevel = 101,
+                    HighestCourseLevel = 401,
                     PassedInterview = false,
                     Placed = false
-                });
+                };
 
-                Assert.True(context.Student.Count() > beforeStudentCount);
-            }
-        }
-        */
+                context.Student.Add(student);
+                await context.SaveChangesAsync();
 
-        [Fact]
-        public void CanGetIndexView()
-        {
-            DbContextOptions<StudentEnrollmentDbContext> options =
-                new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
-                    .UseInMemoryDatabase("TestDB")
-                    .Options;
+                // Act
+                ViewResult vr = await controller.Index(null, null) as ViewResult;
 
-            using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
-            {
-                StudentsController controller = new StudentsController(context);
-
-                Assert.IsAssignableFrom<Task<IActionResult>>(controller.Index(null, null));
+                // Assert
+                Assert.Single((vr.Model as StudentIndexViewModel).Students);
             }
         }
 
         [Fact]
-        public void CanGetDetailsView()
+        public async void CanGetFilteredIndexWithViewModel()
         {
             DbContextOptions<StudentEnrollmentDbContext> options =
                 new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
-                    .UseInMemoryDatabase("TestDB")
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
                     .Options;
 
             using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
             {
+                // Arrange
                 StudentsController controller = new StudentsController(context);
 
-                Assert.IsAssignableFrom<Task<IActionResult>>(controller.Details(null));
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                Student student2 = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Dave",
+                    LastName = "Davidson",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                context.Student.Add(student);
+                context.Student.Add(student2);
+                await context.SaveChangesAsync();
+
+                // Act
+                ViewResult vr = await controller.Index("Dave", "Underwater") as ViewResult;
+
+                // Assert
+                Assert.Single((vr.Model as StudentIndexViewModel).Students);
             }
         }
 
         [Fact]
-        public void CanGetCreateView()
+        public async void CanGetDetails()
         {
             DbContextOptions<StudentEnrollmentDbContext> options =
                 new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
-                    .UseInMemoryDatabase("TestDB")
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
                     .Options;
 
             using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
             {
+                // Arrange
                 StudentsController controller = new StudentsController(context);
 
-                Assert.IsAssignableFrom<Task<IActionResult>>(controller.Create());
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                context.Student.Add(student);
+                await context.SaveChangesAsync();
+
+                // Act
+                ViewResult vr = await controller.Details(student.ID) as ViewResult;
+
+                // Assert
+                Assert.Equal("Tom Hanks", (vr.Model as Student).CurrentCourse.Instructor);
             }
         }
 
         [Fact]
-        public void CanGetEditView()
+        public async void CanGetCreate()
         {
             DbContextOptions<StudentEnrollmentDbContext> options =
                 new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
-                    .UseInMemoryDatabase("TestDB")
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
                     .Options;
 
             using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
             {
+                // Arrange
                 StudentsController controller = new StudentsController(context);
 
-                Assert.IsAssignableFrom<Task<IActionResult>>(controller.Edit((int?)null));
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                context.Student.Add(student);
+                await context.SaveChangesAsync();
+
+                // Assert
+                Assert.IsType<ViewResult>(await controller.Create());
             }
         }
 
         [Fact]
-        public void CanGetRemoveView()
+        public async void CanPostCreate()
         {
             DbContextOptions<StudentEnrollmentDbContext> options =
                 new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
-                    .UseInMemoryDatabase("TestDB")
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
                     .Options;
 
             using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
             {
+                // Arrange
                 StudentsController controller = new StudentsController(context);
 
-                Assert.IsAssignableFrom<Task<IActionResult>>(controller.Remove(null));
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                // Act
+                await controller.Create(student);
+
+                // Assert
+                Assert.Single(context.Student);
+            }
+        }
+
+        [Fact]
+        public async void CanGetEdit()
+        {
+            DbContextOptions<StudentEnrollmentDbContext> options =
+                new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                    .Options;
+
+            using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
+            {
+                // Arrange
+                StudentsController controller = new StudentsController(context);
+
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                context.Student.Add(student);
+                await context.SaveChangesAsync();
+
+                // Act
+                ViewResult vr = await controller.Edit(student.ID) as ViewResult;
+
+                // Assert
+                Assert.Equal("Bob", (vr.Model as Student).FirstName);
+            }
+        }
+
+        [Fact]
+        public async void CanPostEdit()
+        {
+            DbContextOptions<StudentEnrollmentDbContext> options =
+                new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                    .Options;
+
+            using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
+            {
+                // Arrange
+                StudentsController controller = new StudentsController(context);
+
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                context.Student.Add(student);
+                await context.SaveChangesAsync();
+
+                Student modifiedStudent = await context.Student.FirstAsync(s => s.ID == student.ID);
+                modifiedStudent.LastName = "Robertson";
+
+                // Act
+                await controller.Edit(modifiedStudent);
+
+                // Assert
+                Assert.Equal("Robertson", (await context.Student.FirstAsync(s => s.ID == student.ID)).LastName);
+            }
+        }
+
+        [Fact]
+        public async void CanGetRemoveWithViewModel()
+        {
+            DbContextOptions<StudentEnrollmentDbContext> options =
+                new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                    .Options;
+
+            using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
+            {
+                // Arrange
+                StudentsController controller = new StudentsController(context);
+
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                context.Student.Add(student);
+                await context.SaveChangesAsync();
+
+                // Act
+                ViewResult vr = await controller.Remove(student.ID) as ViewResult;
+
+                // Assert
+                Assert.Equal(401, (vr.Model as Student).HighestCourseLevel);
+            }
+        }
+
+        [Fact]
+        public async void CanPostRemove()
+        {
+            DbContextOptions<StudentEnrollmentDbContext> options =
+                new DbContextOptionsBuilder<StudentEnrollmentDbContext>()
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                    .Options;
+
+            using (StudentEnrollmentDbContext context = new StudentEnrollmentDbContext(options))
+            {
+                // Arrange
+                StudentsController controller = new StudentsController(context);
+
+                Course newCourse = new Course()
+                {
+                    Name = "Underwater Basket Weaving.NET Core",
+                    Technology = Technology.AspDotNetCore,
+                    Instructor = "Tom Hanks",
+                    Iteration = "underwater-seattle-901d1",
+                    Level = 901,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today + TimeSpan.FromDays(70)
+                };
+
+                context.Course.Add(newCourse);
+                await context.SaveChangesAsync();
+
+                Student student = new Student()
+                {
+                    CurrentCourseId = newCourse.ID,
+                    FirstName = "Bob",
+                    LastName = "Bobbert",
+                    EnrollmentDate = DateTime.Today,
+                    HighestCourseLevel = 401,
+                    PassedInterview = false,
+                    Placed = false
+                };
+
+                context.Student.Add(student);
+                await context.SaveChangesAsync();
+
+                // Act
+                await controller.CommitRemove(student.ID);
+
+                // Assert
+                Assert.Empty(context.Student);
             }
         }
     }
