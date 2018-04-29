@@ -19,6 +19,9 @@ namespace StudentEnrollmentTest
             HomeController controller = new HomeController();
 
             // Assert
+            // The Index action has no logic, model, or view model
+            // associated with it. Make sure the proper 200 reponse
+            // is returned (IActionResult is ViewResult)
             Assert.IsType<ViewResult>(controller.Index());
         }
 
@@ -29,7 +32,10 @@ namespace StudentEnrollmentTest
             HomeController controller = new HomeController();
 
             // Assert
-            Assert.IsType<ViewResult>(controller.Index());
+            // The About action has no logic, model, or view model
+            // associated with it. Make sure the proper 200 reponse
+            // is returned (IActionResult is ViewResult)
+            Assert.IsType<ViewResult>(controller.About());
         }
 
         [Fact]
@@ -39,7 +45,10 @@ namespace StudentEnrollmentTest
             HomeController controller = new HomeController();
 
             // Assert
-            Assert.IsType<ViewResult>(controller.Index());
+            // The Contact action has no logic, model, or view model
+            // associated with it. Make sure the proper 200 reponse
+            // is returned (IActionResult is ViewResult)
+            Assert.IsType<ViewResult>(controller.Contact());
         }
     }
 }
